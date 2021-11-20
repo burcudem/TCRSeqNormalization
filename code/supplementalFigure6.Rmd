@@ -1,0 +1,165 @@
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(magrittr)
+library(reshape2)
+library(ggplot2)
+library(scales)
+library(MASS)
+library(gganimate)
+library(plyr)
+```
+
+
+## Description of data
+
+There are 140 samples consisting T-cell DNA (monogenic or full spectrum) with or without 260 unique synthetic (spike-in) DNA sequences, controls and blood and tumor spike dilution series. Sequences are amplified in a multiplex PCR reaction using 20 forward and 13 reverse primers. Forward primers bind to the V region of T-cell CDR3 sequences, and reverse primers bind to the J region of the same sequence. The 260 combinations of forward and reverse primers act to amplify all possible CDR3 rearrangements that occur within a given sample, as well as all of the spikes.  
+
+```{r}
+#Set Directory
+
+Clone_Counts <- "./data/fullBatch_DNA160609LC/normalized_clones"
+Spike_Counts <- "./data/fullBatch_DNA160609LC/25bp"
+Run5_MetaData <- "./data/run5_sample_description.txt"
+start<-1
+end<-139
+#function to read tables
+readTabs<-function(filename)
+{
+  d<-read.table(file.path(Clone_Counts, filename), sep='\t', header = T)
+  d<-d[,c(1,2,46,47)]
+  
+}
+
+readCommas<-function(filename)
+{
+  d<-read.table(file.path(Spike_Counts, filename), sep=',', header = T)
+  d<-d[,3:5]
+  d[,1] <- gsub('-', '', d[,1])
+  d
+}
+
+# Read in files
+
+all.clones <- list.files(Clone_Counts)
+all.clones <- all.clones[order(as.numeric(gsub(".*_S|.alignment.*", '', all.clones)))]
+CloneCounts <- lapply(all.clones[start:end], readTabs)
+
+
+all.spikes <- list.files(Spike_Counts, pattern = ".txt$")
+all.spikes <- all.spikes[order(as.numeric(gsub(".*_S|.assembled.*", '', all.spikes)))]
+SpikeCounts <- lapply(all.spikes[start:end], readCommas)
+Run5MetaData <- read.table(Run5_MetaData, header = T, sep = '\t', stringsAsFactors = F)
+
+
+```
+
+```{r}
+#Defining lambda function as the scaling factor under independence; so that consructing VxJ table filled with lambda: expected counts under independence over median of the observed spike counts
+
+lambda<-function(d)
+{
+ d.med<-median(d$spike.count)
+ vbyj.first<- acast(d, V~J)
+ chi<-chisq.test(vbyj.first, correct = F)
+ d<- chi$expected/d.med
+ lambda<-melt(d, varnames=c("V.segments","J.segments"), value.var = c("spike.count"), value.name = "lambda")
+}
+
+lambdas<-lapply(SpikeCounts, lambda)
+```
+
+```{r}
+# Constructing tables with normalized clonotype counts by dividing original clone count ratios into corresponding lambdas
+
+summ=data.frame(sample=integer(end),clonetypes=integer(end),spikes=integer(end))
+normalize<-function(i)
+{ 
+  summ$sample[i]<<-i
+  summ$clonetypes[i]<<-sum(CloneCounts[[i]]$Clone.count)
+  summ$spikes[i]<<-sum(SpikeCounts[[i]]$spike.count)
+  
+  merged<-merge(CloneCounts[[i]],lambdas[[i]]) 
+  merged$countratio<-merged$Clone.count/(summ$clonetypes[i]+summ$spikes[i])
+  merged$normalized<-merged$countratio/merged$lambda 
+  merged
+} 
+
+for(i in start:end)
+{
+  CloneCounts[[i]]<-normalize(i)
+}
+```
+
+
+
+
+```{r}
+# Taking the Blood Tissues and formatting column names
+## For Blood Tissue take samples 91-111 ##
+## For Tumor Tissue take samples 112-132 ##
+
+
+cc.subselect<-function(i)
+{
+  sub<-CloneCounts[[i]][,c("Clone.ID","normalized","countratio")]
+  sub<-rename(sub,c("normalized"=paste("normalized",i, sep="~"),"countratio"=paste("countratio",i, sep="~")))
+  sub
+}
+
+cc.merge<-function(first,last)
+{
+merged<-cc.subselect(first) 
+
+for(i in (first+1):last)
+{
+    merged<-merge(merged,cc.subselect(i) ,by="Clone.ID", all=TRUE)
+}
+merged[is.na(merged)]<-0  
+merged  
+}
+
+mergedNormalized<-cc.merge(91,111)
+# mergedNormalized[is.na(mergedNormalized)]<-0
+
+```
+
+
+```{r}
+#Merging with metadata for sketching boxplots
+
+longN<-function(merged)
+{
+longNorm<-melt(merged, id= c("Clone.ID"))
+longNorm$Clone.ID<-as.numeric(longNorm$Clone.ID)
+longNorm$type <- as.factor(gsub("~.+$", "", longNorm$variable))
+longNorm$sample <- as.factor(as.numeric(gsub("^.+~", "", longNorm$variable)))
+longNorm$variable <- NULL
+longNorm<-merge(longNorm,Run5MetaData,by.x = "sample", by.y="BARCODE")
+}
+longNorm<-longN(mergedNormalized)
+```
+
+```{r}
+# LinePlot of Total Counts over increasing ST concentration series 
+## For Tumor Tissue take samples 112-132 ##
+
+summdils<-merge(summ[91:111,],Run5MetaData,by.x = "sample", by.y="BARCODE")
+
+base<-ggplot(summdils,aes(x=dil, y=(clonetypes+spikes)))+ ylim(0, 1250000) + scale_x_continuous(trans = 'log2', labels=scales::percent)+ ylab("Total Counts")+ ggtitle("Blood Tissue Total Counts in Increasing ST Concentrations") +geom_point(shape=1)+stat_summary(fun.y=median, geom="line", size=1)
+base
+
+base<-ggplot(summdils,aes(x=dil, y=clonetypes))+ ylim(0, 1250000) + scale_x_continuous(trans = 'log2', labels=scales::percent)+ ylab("Clonotype Counts")+ ggtitle("Blood Tissue Total Clonotype Counts in Increasing ST Concentrations") +geom_point(shape=1)+stat_summary(fun.y=median, geom="line", size=1)
+base
+
+base<-ggplot(summdils,aes(x=dil, y=spikes))+ ylim(0, 1250000) + scale_x_continuous(trans = 'log2', labels=scales::percent)+ ylab("ST Counts")+ ggtitle("Blood Tissue Total ST Counts in Increasing ST Concentrations") +geom_point(shape=1)+stat_summary(fun.y=median, geom="line", size=1)
+base
+
+base<-ggplot(summdils,aes(x=dil, y=clonetypes/(clonetypes+spikes)))+ scale_y_continuous(trans = 'log10', labels=trans_format('log10',math_format(10^.x)))+ scale_x_continuous(trans = 'log2', labels=scales::percent)+ ylab("Log Clonotype Count Ratios")+ ggtitle("Blood Tissue Total Clonotype Count Ratios in Increasing ST Concentrations") +geom_point(shape=1)+stat_summary(fun.y=median, geom="line", size=1)
+base
+
+base<-ggplot(summdils,aes(x=dil, y=spikes/(clonetypes+spikes)))+ scale_y_continuous(trans = 'log10', labels=trans_format('log10',math_format(10^.x)))+ scale_x_continuous(trans = 'log2', labels=scales::percent)+ ylab("Log ST Count Ratios")+ ggtitle("Blood Tissue Total ST Count Ratios in Increasing ST Concentrations") +geom_point(shape=1)+stat_summary(fun.y=median, geom="line", size=1)
+base
+
+```

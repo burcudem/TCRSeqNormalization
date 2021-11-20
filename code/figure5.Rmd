@@ -1,0 +1,140 @@
+---
+title: "Independence Analysis for F and R Primers"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+
+library(reshape2)
+library(MASS)
+library(ggplot2)
+library(ggthemes)
+library(viridis)
+library(gganimate)
+```
+
+
+## Summary of the Dataset and Purpose
+
+We would like to identify whether there is an interaction between forward and reverse primers and if there is an interaction, which particular forward and reverse primers are interacted. For independece analysis, we will use chi-square pearson residuals. We have 20 samples. Each sample has 260 different spike counts for each 20 forward (V) and 13 reverse (J) primer combinations (20x13=260). For creating these 20 samples, only spikes and primers were used in the PCR (no gemomic DNA were present).
+
+A matrice of spike counts will be constructed to prepare the chi-square table; V primers as columns and J primers as rows. In each cell, the corresponding spike count to the VJ combination will be placed. Then, chi-square indepence test will be attempted. We are less interested in the calculated (12x19 df.) chi-square test statistic to test the null hypothesis of independence, but more interested in the contribution of each cell to the test statistic. In other words, we are trying to catch an interpretable pattern. For this purpose, we will look at the pearson residual tables, in which corresponding pearson residual ((O-E)/sqrt(E)) is placed in each cell. If primers are independent, this will allow us to do the primer iteration experiments by iterating 33 levels of concentrations and find optimal concetrations for each primer to reduce the amplification bias to some extent at the bench level. 
+
+E for a cell = row total x column total / grand total.
+
+O is the observed count in a cell 
+
+Chi-squared statistic is calculated by summing over the 260 cells [(O-E)^2/E].
+
+Pearson residual for each cell is calculated by (O-E)/sqrt(E)
+
+
+## Aggregate all samples into a single table
+
+Each sample has an individual file containing the 260 counts. We combine them into a single data frame prior to the analysis. 
+
+```{r cars}
+
+# Set directory ### Uses S1-S20 from DNA160609LC
+count.dir <- "./data/spike_counts/25bp/ind/DNA160609_first_20/"
+
+# Read in files and sort by sample number
+all.counts <- list.files(count.dir)
+all.counts <- all.counts[order(as.numeric(gsub(".*_S|.assembled.*", '', all.counts)))]
+
+# Read in first file to start aggregate data frame
+count.df <- read.table(file.path(count.dir, all.counts[1]), sep =',', header = T)
+count.df <- count.df[,3:5]
+
+# Combine spike counts for all files into 1 data frame
+  # Columns are samples
+  # Rows are spikes
+for (i in 2:length(all.counts)){
+  curr.df <- read.table(file.path(count.dir, all.counts[i]), sep = ',', header = T)
+  count.df <- cbind(count.df, curr.df$spike.count)
+}   #   for i in 2:length(new.counts)
+colnames(count.df) <- c("V", "J", seq(1:length(all.counts)))
+```
+
+## Creating animation of heatmaps of pearson residual matrices of 20 samples to visualize the patterns
+
+
+``` {r fig.show = "animate"}
+
+# Creating a facet of heat maps with all samples next to each other by using ggplot
+
+pear.res<-function(colName)
+{
+  temp.chi <- chisq.test(acast(count.df, V~J,value.var = colName) , correct = F)
+  temp.res<- melt(temp.chi$residuals,id_vars=c("V","J"))
+  temp.res$sample<-rep(colName,nrow(temp.res))
+  temp.res
+}
+
+res<-lapply(colnames(count.df[ ,3:22]), pear.res)
+res.bound<-do.call(rbind,res)
+#res.bound<-merge(tissue.lookup, res.bound, by.x = "num", by.y="sample")
+
+gg<-ggplot(res.bound, aes(x=Var1, y=Var2, fill=value, frame=sample))
+gg<-gg+geom_tile(color="white", size=0.1)
+gg<-gg+scale_fill_gradient2()+coord_equal()
+gg<-gg+theme(axis.text=element_text(size=6))
+gg<-gg+theme(axis.text.x = element_text(angle = 90))
+#gg<-gg+facet_wrap(~sample, ncol=5)
+gg_animate(gg)
+gg
+
+```
+## Comments:
+
+First observations: In the ideal case, we would expect to observe mostly white heatmaps indicating as little interaction as possible. However there is a lot of color in these heatmaps. The pattern of interactions is conserved accross all 20 samples. P-values pertaining to chi-square tests (calculated below) for all samples are very low, indicating dependence between V and J primers in general.
+
+To get a feeling about the scale of the data consider the spike counts for J2-2, J2-4, V15 and V16. For sample 1 they are: V15+J2-2:5434, V15+J2-4:657, V16+J2-2:99, V16+J2-4:4093. Comparing the first two values you'd think that J2-2 is far more efficient than J2-4 under no interaction assumption (10 fold) but it is completely reversed for V16 (40 fold less efficient). These ratios are preserved, rather remarkably accross all samples.  This is one of the more dramatic 4-tuples but this is definitely not an exception.
+
+Based on this preliminary analysis, adjusting primer concentrations, as-is, rather tricky and perhaps unapplicable. For example, just trying to equilibrate for these 4 primers mentioned above will likely not work no matter the concentration combination we choose.
+
+Note: I have seen the same pattern when I applied the code for heat map to previous data (with genomic DNA and higher level of primer concentration -- so primer dimerization might not have been an issue)
+
+
+## chi square test and residual table for one sample
+
+``` {r}
+
+## Preperaing the chi square matrix (V as columns, J as rows)
+
+vbyj.first<- acast(count.df, V~J, value.var = 14)
+
+## Chi squared test
+
+chi.first <- chisq.test(vbyj.first, correct = F)
+
+## Creating residuals tables
+
+resid.table.first <- chi.first$residuals
+
+```
+
+## Comments: 
+
+Here, I took one sample at a time and found the chi-square test statistic, p-values, and residuals. P-values are extremely low for every sample. As a result we reject Ho (concluding that V and J primers are dependent) When we look at pearson residuals (I haven't checked the adjusted residuals) we generally see high absolute values, suggesting the presence of interactions for most of the cells. 
+
+
+## Creating clustered and unclustered heatmaps for one sample
+
+``` {r}
+
+bk = seq(-100, 100)
+mycols<-colorRampPalette(colors = c("red", "white","blue"))(length(bk)-1)
+
+
+# creating clustered heatmap without scaling
+
+heatmap(resid.table.first, col=mycols, breaks=bk, scale='none') 
+
+```
+
+## Comments:
+
+I took one sample (as it shows the same pattern for each sample) and created clustered heatmap. In this clustered heatmap the variation of spike counts in both directions (positive or negative deviation from independence) is more visible. Increasing concentrations of one group of primers due to lower spike counts (red cells in one part of the heatmap) can adversely affect the purpose of reducing the amplification bias because there are also higher spike counts (blue cells) present for the same group of primers.
+

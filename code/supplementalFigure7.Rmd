@@ -1,0 +1,142 @@
+---
+title: "Replicate Comparison: Intersection Analysis and Comparison of Distribution of Clonotype Counts"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, error = FALSE)
+library(dplyr)
+library(data.table)
+library(UpSetR)
+library(ggplot2)
+library(scales)
+
+```
+
+
+## Description of data
+
+
+```{r}
+#Set Directory
+## Samples 51-55 are used for supFig.7 ## 
+
+Clone_Counts <- "./data/fullBatch_DNA160609LC/normalized_clones"
+Spike_Counts <- "./data/fullBatch_DNA160609LC/25bp"
+Run5_MetaData <- "./data/run5_sample_description.txt"
+start<-0
+end<-139
+#function to read tables
+readTabs<-function(filename)
+{  
+  d<-fread(file.path(Clone_Counts, filename), sep='\t', header = T)
+  d<-d[,c(2,3,4,46,47), with=FALSE]
+  i<-as.numeric(gsub(".*_S|.alignment.*", '',filename)) 
+  cc.i<-paste0("cc.",i) 
+  cf.i<-paste0("cf.",i) 
+  d<-rename(d, cc=`Clone count`)
+  d<-rename_(d,.dots=setNames(list("cc"),cc.i))
+  d<-rename(d, cf=`Clone fraction`)
+  d<-rename_(d,.dots=setNames(list("cf"),cf.i))
+} 
+
+
+# Read in files
+
+all.clones <- list.files(Clone_Counts)
+all.clones <- all.clones[order(as.numeric(gsub(".*_S|.alignment.*", '', all.clones)))]
+CloneCounts <- lapply(all.clones[start:end], readTabs)
+Run5MetaData <- fread(Run5_MetaData, header = T, sep = '\t', stringsAsFactors = F)
+```
+
+
+
+```{r}
+# merge replicates
+reps=Run5MetaData[ , list( yidx = list(.I) ) , by =  Treatment]
+mergeCC<-function(cc1,cc2)
+{
+  full_join(cc1,cc2,by=c("Clonal sequence(s)","V segments","J segments"), all=TRUE)
+}
+reduceSub<-function(index)
+{
+  Reduce(mergeCC,CloneCounts[index])
+}
+reduced=lapply(X=reps$yidx, FUN=reduceSub)
+
+```
+
+
+```{r}
+#Let's try to plot the first wild type mouse
+
+calcMed<-function(counts,size)
+{
+counts<-select(counts,starts_with("cf"))
+counts[is.na(counts)] <- 0
+counts$med<-apply(counts,1, max)
+counts$med<-counts$med/size
+counts$obs <-apply(counts, 1, function(z) sum(z==0))
+counts$obs<-size-counts$obs
+counts
+}
+
+
+```
+
+
+```{r}
+drawUpset<-function(n,countdata,rep) 
+{
+  cd0<-as.data.frame(countdata)
+  cd0<-subset(cd0, cd0[,c("med")] > quantile(cd0[,c("med")], prob = 1 - n/100, na.rm=TRUE))
+  cd1<-select(cd0,starts_with("cf"))
+  cd1[cd1>0]<-1
+  cd1[is.na(cd1)]<-0
+  upset(cd1)
+}
+
+
+
+```
+
+```{r}
+f <- function(y) 
+    c(label=length(y), y=median(y))
+boxcount<-function(counts)
+{
+  base<-ggplot(counts,aes(x=obs, y=med, group=obs))+geom_boxplot()+ stat_summary(fun.data=f, geom="text", vjust=-0.5, col="blue")+ ylab("Mean Clonotype Count Frequency Across Replicates")+ xlab("Number of Replicates with the Clonotype")+ggtitle ("Comparison of the Distr. of Clonotype Count Freq Between Sets with the Same Clones")+scale_y_continuous(trans ='log10',labels=trans_format('log10',math_format(10^.x))) + scale_x_discrete(limits=c("1","2","3","4","5")) 
+
+}
+```
+
+
+```{r}
+analyzeBatch<-function(wtm,rep)
+{ 
+ counts=calcMed(wtm,length(rep$yidx[[1]])) 
+ print("Intersection Analysis for replicates:")
+ print(rep) 
+ print("Top 10% Clonotypes")
+ drawUpset(10,counts,rep)
+ print("Top 5% Clonotypes")
+ drawUpset(5,counts,rep) 
+ print("Top 1% Clonotypes")
+ drawUpset(1,counts,rep)
+ print("Top 0.3% Clonotypes")
+ drawUpset(0.3,counts,rep)
+ print(boxcount(counts))
+} 
+
+```
+
+```{r}
+replist<-split(reps, seq(nrow(reps)))
+mapply(analyzeBatch,reduced, replist)
+```
+
+```{r}
+counts<-reduced[[8]]
+size<-5
+
+
+```

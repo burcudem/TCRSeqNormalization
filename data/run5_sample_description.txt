@@ -1,0 +1,140 @@
+BARCODE	Sample name	Treatment	Description	shortd	dil
+1	S1	spike only 	spike + primers	spike only 	1
+2	S2	spike only 	spike + primers	spike only 	1
+3	S3	spike only 	spike + primers	spike only 	1
+4	S4	spike only 	spike + primers	spike only 	1
+5	S5	spike only 	spike + primers	spike only 	1
+6	S6	spike only 	spike + primers	spike only 	1
+7	S7	spike only 	spike + primers	spike only 	1
+8	S8	spike only 	spike + primers	spike only 	1
+9	S9	spike only 	spike + primers	spike only 	1
+10	S10	spike only 	spike + primers	spike only 	1
+11	S11	spike only 	spike + primers	spike only 	1
+12	S12	spike only 	spike + primers	spike only 	1
+13	S13	spike only 	spike + primers	spike only 	1
+14	S14	spike only 	spike + primers	spike only 	1
+15	S15	spike only 	spike + primers	spike only 	1
+16	S16	spike only 	spike + primers	spike only 	1
+17	S17	spike only 	spike + primers	spike only 	1
+18	S18	spike only 	spike + primers	spike only 	1
+19	S19	spike only 	spike + primers	spike only 	1
+20	S20	spike only 	spike + primers	spike only 	1
+21	S21	P14 spleen - no spike 	P14 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	P14 spleen - no spike 	0
+22	S22	P14 spleen - no spike 	P14 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	P14 spleen - no spike 	0
+23	S23	P14 spleen - no spike 	P14 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	P14 spleen - no spike 	0
+24	S24	P14 spleen - no spike 	P14 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	P14 spleen - no spike 	0
+25	S25	P14 spleen - no spike 	P14 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	P14 spleen - no spike 	0
+26	S26	OT1 spleen - no spike 	OT1 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	OT1 spleen - no spike 	0
+27	S27	OT1 spleen - no spike 	OT1 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	OT1 spleen - no spike 	0
+28	S28	OT1 spleen - no spike 	OT1 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	OT1 spleen - no spike 	0
+29	S29	OT1 spleen - no spike 	OT1 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	OT1 spleen - no spike 	0
+30	S30	OT1 spleen - no spike 	OT1 transgenic mouse gDNA + primers (expect monoclonal TCR repertoire)	OT1 spleen - no spike 	0
+31	S31	El4 - no spike 	El4 - mouse T cell line gDNA +primers   (expect monoclonal TCR repertoire)	El4 - no spike 	0
+32	S32	El4 - no spike 	El4 - mouse T cell line gDNA +primers   (expect monoclonal TCR repertoire)	El4 - no spike 	0
+33	S33	El4 - no spike 	El4 - mouse T cell line gDNA +primers   (expect monoclonal TCR repertoire)	El4 - no spike 	0
+34	S34	El4 - no spike 	El4 - mouse T cell line gDNA +primers   (expect monoclonal TCR repertoire)	El4 - no spike 	0
+35	S35	El4 - no spike 	El4 - mouse T cell line gDNA +primers   (expect monoclonal TCR repertoire)	El4 - no spike 	0
+36	S36	EpH4 - no spike 	EpH4 - mouse mammary epithelial cell line gDNA +primers (expect no T cells and hence no TCR)	EpH4 - no spike 	0
+37	S37	EpH4 - no spike 	EpH4 - mouse mammary epithelial cell line gDNA +primers (expect no T cells and hence no TCR)	EpH4 - no spike 	0
+38	S38	EpH4 - no spike 	EpH4 - mouse mammary epithelial cell line gDNA +primers (expect no T cells and hence no TCR)	EpH4 - no spike 	0
+39	S39	EpH4 - no spike 	EpH4 - mouse mammary epithelial cell line gDNA +primers (expect no T cells and hence no TCR)	EpH4 - no spike 	0
+40	S40	EpH4 - no spike 	EpH4 - mouse mammary epithelial cell line gDNA +primers (expect no T cells and hence no TCR)	EpH4 - no spike 	0
+41	S41	D2OR - no spike 	D2OR - mouse epithelial cell line gDNA + primers (expect no T cells and hence no TCR)	D2OR - no spike 	0
+42	S42	D2OR - no spike 	D2OR - mouse epithelial cell line gDNA + primers (expect no T cells and hence no TCR)	D2OR - no spike 	0
+43	S43	D2OR - no spike 	D2OR - mouse epithelial cell line gDNA + primers (expect no T cells and hence no TCR)	D2OR - no spike 	0
+44	S44	D2OR - no spike 	D2OR - mouse epithelial cell line gDNA + primers (expect no T cells and hence no TCR)	D2OR - no spike 	0
+45	S45	D2OR - no spike 	D2OR - mouse epithelial cell line gDNA + primers (expect no T cells and hence no TCR)	D2OR - no spike 	0
+46	S46	H2O - no spike 	Water +primers	H2O - no spike 	0
+47	S47	H2O - no spike 	Water +primers	H2O - no spike 	0
+48	S48	H2O - no spike 	Water +primers	H2O - no spike 	0
+49	S49	H2O - no spike 	Water +primers	H2O - no spike 	0
+50	S50	H2O - no spike 	Water +primers	H2O - no spike 	0
+51	S51	WT spleen - no spike 	Wild-type mouse spleen gDNA +primers (expect diverse TCR repertoire )	WT spleen - no spike 	0
+52	S52	WT spleen - no spike 	Wild-type mouse spleen gDNA +primers (expect diverse TCR repertoire )	WT spleen - no spike 	0
+53	S53	WT spleen - no spike 	Wild-type mouse spleen gDNA +primers (expect diverse TCR repertoire )	WT spleen - no spike 	0
+54	S54	WT spleen - no spike 	Wild-type mouse spleen gDNA +primers (expect diverse TCR repertoire )	WT spleen - no spike 	0
+55	S55	WT spleen - no spike 	Wild-type mouse spleen gDNA +primers (expect diverse TCR repertoire )	WT spleen - no spike 	0
+56	S56	P14 spleen + spike 	P14 transgenic mouse gDNA +spike+ primers (expect monoclonal TCR repertoire)	P14 spleen + spike 	1
+57	S57	P14 spleen + spike 	P14 transgenic mouse gDNA +spike+ primers (expect monoclonal TCR repertoire)	P14 spleen + spike 	1
+58	S58	P14 spleen + spike 	P14 transgenic mouse gDNA +spike+ primers (expect monoclonal TCR repertoire)	P14 spleen + spike 	1
+59	S59	P14 spleen + spike 	P14 transgenic mouse gDNA +spike+ primers (expect monoclonal TCR repertoire)	P14 spleen + spike 	1
+60	S60	P14 spleen + spike 	P14 transgenic mouse gDNA +spike+ primers (expect monoclonal TCR repertoire)	P14 spleen + spike 	1
+61	S61	OT1 spleen + spike 	OT1 transgenic mouse gDNA +spike + primers (expect monoclonal TCR repertoire)	OT1 spleen + spike 	1
+62	S62	OT1 spleen + spike 	OT1 transgenic mouse gDNA +spike + primers (expect monoclonal TCR repertoire)	OT1 spleen + spike 	1
+63	S63	OT1 spleen + spike 	OT1 transgenic mouse gDNA +spike + primers (expect monoclonal TCR repertoire)	OT1 spleen + spike 	1
+64	S64	OT1 spleen + spike 	OT1 transgenic mouse gDNA +spike + primers (expect monoclonal TCR repertoire)	OT1 spleen + spike 	1
+65	S65	OT1 spleen + spike 	OT1 transgenic mouse gDNA +spike + primers (expect monoclonal TCR repertoire)	OT1 spleen + spike 	1
+66	S66	El4  + spike 	El4 - mouse T cell line gDNA +spike+primers   (expect monoclonal TCR repertoire)	El4  + spike 	1
+67	S67	El4  + spike 	El4 - mouse T cell line gDNA +spike+primers   (expect monoclonal TCR repertoire)	El4  + spike 	1
+68	S68	El4  + spike 	El4 - mouse T cell line gDNA +spike+primers   (expect monoclonal TCR repertoire)	El4  + spike 	1
+69	S69	El4  + spike 	El4 - mouse T cell line gDNA +spike+primers   (expect monoclonal TCR repertoire)	El4  + spike 	1
+70	S70	El4  + spike 	El4 - mouse T cell line gDNA +spike+primers   (expect monoclonal TCR repertoire)	El4  + spike 	1
+71	S71	EpH4 + spike 	EpH4 - mouse mammary epithelial cell line gDNA+spike +primers (expect no T cells and hence no TCR)	EpH4 + spike 	1
+72	S72	EpH4 + spike 	EpH4 - mouse mammary epithelial cell line gDNA+spike +primers (expect no T cells and hence no TCR)	EpH4 + spike 	1
+73	S73	EpH4 + spike 	EpH4 - mouse mammary epithelial cell line gDNA+spike +primers (expect no T cells and hence no TCR)	EpH4 + spike 	1
+74	S74	EpH4 + spike 	EpH4 - mouse mammary epithelial cell line gDNA+spike +primers (expect no T cells and hence no TCR)	EpH4 + spike 	1
+75	S75	EpH4 + spike 	EpH4 - mouse mammary epithelial cell line gDNA+spike +primers (expect no T cells and hence no TCR)	EpH4 + spike 	1
+76	S76	D2OR + spike 	D2OR - mouse epithelial cell line gDNA +spike+ primers (expect no T cells and hence no TCR)	D2OR + spike 	1
+77	S77	D2OR + spike 	D2OR - mouse epithelial cell line gDNA +spike+ primers (expect no T cells and hence no TCR)	D2OR + spike 	1
+78	S78	D2OR + spike 	D2OR - mouse epithelial cell line gDNA +spike+ primers (expect no T cells and hence no TCR)	D2OR + spike 	1
+79	S79	D2OR + spike 	D2OR - mouse epithelial cell line gDNA +spike+ primers (expect no T cells and hence no TCR)	D2OR + spike 	1
+80	S80	D2OR + spike 	D2OR - mouse epithelial cell line gDNA +spike+ primers (expect no T cells and hence no TCR)	D2OR + spike 	1
+81	S81	H2O + spike 	Water +spike+primers	H2O + spike 	1
+82	S82	H2O + spike 	Water +spike+primers	H2O + spike 	1
+83	S83	H2O + spike 	Water +spike+primers	H2O + spike 	1
+84	S84	H2O + spike 	Water +spike+primers	H2O + spike 	1
+85	S85	H2O + spike 	Water +spike+primers	H2O + spike 	1
+86	S86	WT spleen + spike 	Wild-type mouse spleen gDNA+spike +primers (expect diverse TCR repertoire )	WT spleen + spike 	1
+87	S87	WT spleen + spike 	Wild-type mouse spleen gDNA+spike +primers (expect diverse TCR repertoire )	WT spleen + spike 	1
+88	S88	WT spleen + spike 	Wild-type mouse spleen gDNA+spike +primers (expect diverse TCR repertoire )	WT spleen + spike 	1
+89	S89	WT spleen + spike 	Wild-type mouse spleen gDNA+spike +primers (expect diverse TCR repertoire )	WT spleen + spike 	1
+90	S90	WT spleen + spike 	Wild-type mouse spleen gDNA+spike +primers (expect diverse TCR repertoire )	WT spleen + spike 	1
+91	S91	Blood (600ng) + spike dil1	Blood (600ng) + spike dil1 + primers	spike dil1	1
+92	S92	Blood (600ng) + spike dil1	Blood (600ng) + spike dil1 + primers	spike dil1	1
+93	S93	Blood (600ng) + spike dil1	Blood (600ng) + spike dil1 + primers	spike dil1	1
+94	S94	Blood (600ng) + spike dil2	Blood (600ng) + spike dil2 + primers	spike dil2	0.5
+95	S95	Blood (600ng) + spike dil2	Blood (600ng) + spike dil2 + primers	spike dil2	0.5
+96	S96	Blood (600ng) + spike dil2	Blood (600ng) + spike dil2 + primers	spike dil2	0.5
+97	S97	Blood (600ng) + spike dil3	Blood (600ng) + spike dil3 + primers	spike dil3	0.1
+98	S98	Blood (600ng) + spike dil3	Blood (600ng) + spike dil3 + primers	spike dil3	0.1
+99	S99	Blood (600ng) + spike dil3	Blood (600ng) + spike dil3 + primers	spike dil3	0.1
+100	S100	Blood (600ng) + spike dil4	Blood (600ng) + spike dil4 + primers	spike dil4	0.05
+101	S101	Blood (600ng) + spike dil4	Blood (600ng) + spike dil4 + primers	spike dil4	0.05
+102	S102	Blood (600ng) + spike dil4	Blood (600ng) + spike dil4 + primers	spike dil4	0.05
+103	S103	Blood (600ng) + spike dil5	Blood (600ng) + spike dil5  + primers	spike dil5	0.01
+104	S104	Blood (600ng) + spike dil5	Blood (600ng) + spike dil5  + primers	spike dil5	0.01
+105	S105	Blood (600ng) + spike dil5	Blood (600ng) + spike dil5  + primers	spike dil5	0.01
+106	S106	Blood (600ng) + spike dil6	Blood (600ng) + spike dil6 + primers	spike dil6	0.005
+107	S107	Blood (600ng) + spike dil6	Blood (600ng) + spike dil6 + primers	spike dil6	0.005
+108	S108	Blood (600ng) + spike dil6	Blood (600ng) + spike dil6 + primers	spike dil6	0.005
+109	S109	Blood (600ng) + no spike	Blood (600ng) + no spike + primers	no spike	0
+110	S110	Blood (600ng) + no spike	Blood (600ng) + no spike + primers	no spike	0
+111	S111	Blood (600ng) + no spike	Blood (600ng) + no spike + primers	no spike	0
+112	S112	Tumor (600ng) + spike dil1	Tumor (600ng) + spike dil1 + primers	spike dil1	1
+113	S113	Tumor (600ng) + spike dil1	Tumor (600ng) + spike dil1 + primers	spike dil1	1
+114	S114	Tumor (600ng) + spike dil1	Tumor (600ng) + spike dil1 + primers	spike dil1	1
+115	S115	Tumor (600ng) + spike dil2	Tumor (600ng) + spike dil2 + primers	spike dil2	0.5
+116	S116	Tumor (600ng) + spike dil2	Tumor (600ng) + spike dil2 + primers	spike dil2	0.5
+117	S117	Tumor (600ng) + spike dil2	Tumor (600ng) + spike dil2 + primers	spike dil2	0.5
+118	S118	Tumor (600ng) + spike dil3	Tumor (600ng) + spike dil3+ primers	spike dil3	0.1
+119	S119	Tumor (600ng) + spike dil3	Tumor (600ng) + spike dil3 + primers	spike dil3	0.1
+120	S120	Tumor (600ng) + spike dil3	Tumor (600ng) + spike dil3 + primers	spike dil3	0.1
+121	S121	Tumor (600ng) + spike dil4	Tumor (600ng) + spike dil4+ primers	spike dil4	0.05
+122	S122	Tumor (600ng) + spike dil4	Tumor (600ng) + spike dil4 + primers	spike dil4	0.05
+123	S123	Tumor (600ng) + spike dil4	Tumor (600ng) + spike dil4 + primers	spike dil4	0.05
+124	S124	Tumor (600ng) + spike dil5	Tumor (600ng) + spike dil5 + primers	spike dil5	0.01
+125	S125	Tumor (600ng) + spike dil5	Tumor (600ng) + spike dil5 + primers	spike dil5	0.01
+126	S126	Tumor (600ng) + spike dil5	Tumor (600ng) + spike dil5 + primers	spike dil5	0.01
+127	S127	Tumor (600ng) + spike dil6	Tumor (600ng) + spike dil6 + primers	spike dil6	0.005
+128	S128	Tumor (600ng) + spike dil6	Tumor (600ng) + spike dil6 + primers	spike dil6	0.005
+129	S129	Tumor (600ng) + spike dil6	Tumor (600ng) + spike dil6 + primers	spike dil6	0.005
+130	S130	Tumor (600ng) + no spike	Tumor (600ng) + no spike + primers	no spike	0
+131	S131	Tumor (600ng) + no spike	Tumor (600ng) + no spike+ primers	no spike	0
+132	S132	Tumor (600ng) + no spike	Tumor (600ng) + no spike + primers	no spike	0
+133	S133	PCR control	spike  only + primers (included for each PCR batch)	PCR control	1
+134	S134	PCR control	spike  only + primers (included for each PCR batch)	PCR control	1
+135	S135	PCR control	spike  only + primers (included for each PCR batch)	PCR control	1
+136	S136	2nd PCR - no template control 	2nd PCR primers with water	2nd PCR - no template control 	1
+137	S137	2nd PCR - no template control 	2nd PCR primers with water	2nd PCR - no template control 	1
+138	S138	2nd PCR - no template control 	2nd PCR primers with water	2nd PCR - no template control 	1
+139	S139	2nd PCR - no template control 	2nd PCR primers with water	2nd PCR - no template control 	1

@@ -1,0 +1,1 @@
+cloneId	cloneCount	cloneFraction	clonalSequence	allVHits	allDHits	allJHits	allVAlignments	allDAlignments	allJAlignments	nSeqCDR3	minQualCDR3	aaSeqCDR3	bestVHit	bestDHit	bestJHit	bestVAlignment	bestDAlignment	bestJAlignment	reads	cloneId	index	V segments	J segments	Normalized clone count	Normalized clone fraction	nb.clone.count	nb.clone.fraction
